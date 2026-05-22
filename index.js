@@ -29,6 +29,7 @@ async function run() {
 
     const db = client.db("wanderlast");
     const destinationCollection = db.collection("destinations");
+    const bookings = db.collection("bookings");
 
     app.get("/destinations", async (req, res) => {
       const result = await destinationCollection.find().toArray();
@@ -54,6 +55,11 @@ async function run() {
     app.post("/destination", async (req, res) => {
       const destinationData = req.body;
       const result = await destinationCollection.insertOne(destinationData);
+      res.send(result);
+    });
+    app.post("/bookings", async (req, res) => {
+      const bookingData = req.body;
+      const result = await bookings.insertOne(bookingData);
       res.send(result);
     });
     app.delete("/destinations/:id", async (req, res) => {
