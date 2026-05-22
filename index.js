@@ -42,6 +42,13 @@ async function run() {
       });
       res.send(result);
     });
+    app.get("/bookings/:userId", async (req, res) => {
+      const { userId } = req.params;
+      const result = await bookings.find({
+        userId,
+      }).toArray();
+      res.send(result);
+    });
     app.patch("/destination/:id", async (req, res) => {
       const { id } = req.params;
       const updatedData = req.body;
