@@ -44,9 +44,11 @@ async function run() {
     });
     app.get("/bookings/:userId", async (req, res) => {
       const { userId } = req.params;
-      const result = await bookings.find({
-        userId,
-      }).toArray();
+      const result = await bookings
+        .find({
+          userId,
+        })
+        .toArray();
       res.send(result);
     });
     app.patch("/destination/:id", async (req, res) => {
@@ -73,6 +75,13 @@ async function run() {
       const { id } = req.params;
       const result = await destinationCollection.deleteOne({
         _id: new ObjectId(id),
+      });
+      res.send(result);
+    });
+    app.delete("/bookings/:id", async (req, res) => {
+      const { id } = req.params;
+      const result = await bookings.deleteOne({
+        _id: id,
       });
       res.send(result);
     });
