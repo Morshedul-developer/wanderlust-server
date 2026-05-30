@@ -35,7 +35,14 @@ async function run() {
       const result = await destinationCollection.find().toArray();
       res.send(result);
     });
-    app.get("/destinations/:id", async (req, res) => {
+    app.get("/destinations/:id", (req, res, next)=>{
+      const header = req.headers.authorization;
+      if (header === "yes, logged in") {
+        next();
+      } else {
+        res.status(401).json({ message: "Unauthorized" });
+      }
+    }, async (req, res) => {
       const { id } = req.params;
       const result = await destinationCollection.findOne({
         _id: new ObjectId(id),
