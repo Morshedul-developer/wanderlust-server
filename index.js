@@ -37,11 +37,8 @@ async function run() {
     });
     app.get("/destinations/:id", (req, res, next)=>{
       const header = req.headers.authorization;
-      if (header === "yes, logged in") {
+      console.log(header);
         next();
-      } else {
-        res.status(401).json({ message: "Unauthorized" });
-      }
     }, async (req, res) => {
       const { id } = req.params;
       const result = await destinationCollection.findOne({
